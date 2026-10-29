@@ -21,7 +21,7 @@ def analyze_tests(test_results):
             timeout_counter += 1
             failed_timed_out.append(result["name"])
         else:
-            raise ValueError(f"Unknown test status: {status}")
+            raise ValueError(f"Unknown test status: {status}")     
         total_time += result["duration_ms"]
 
     if total_tests > 0:
