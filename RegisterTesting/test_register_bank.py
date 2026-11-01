@@ -1,4 +1,4 @@
-from register_bank import RegisterBank
+from RegisterTesting.register_bank import RegisterBank
 
 device = RegisterBank(4)
 

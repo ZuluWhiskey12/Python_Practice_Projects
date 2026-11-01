@@ -1,5 +1,5 @@
 from pprint import pprint
-from analyze_tests import analyze_tests
+from analyze_Results import analyze_tests
 
 test_results = [
     {"name": "reset_sequence", "status": "PASS", "duration_ms": 12},
