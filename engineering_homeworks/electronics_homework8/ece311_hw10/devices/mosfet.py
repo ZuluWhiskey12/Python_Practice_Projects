@@ -1,3 +1,4 @@
+import math
 class MOSFET:
     def __init__(self, device_type, v_threshold, k, clm = 0.0):
         if not isinstance(device_type, str):
@@ -11,25 +12,29 @@ class MOSFET:
         else:
             polarity = -1
         
-        if not isinstance(v_threshold, (int, float)):
-            raise TypeError("Input voltage value")
-        if v_threshold <= 0:
+        self.polarity = polarity
+        self.v_threshold = self.parameter_validation("Threshold voltage", v_threshold)
+        self.k = self.parameter_validation("Transconductance parameter", k)
+        self.clm = self.parameter_validation("Channel lenght modulation", clm)
+        
+        if self.v_threshold <= 0:
             raise ValueError("Input magnitude of threshold voltage")
         
-        if not isinstance(k, (int, float)):
-            raise TypeError("Input a numeric value")
-        if k <= 0:
+        if self.k <= 0:
             raise ValueError("Input must be greater then zero")
         
-        if not isinstance(clm, (int, float)):
-            raise TypeError("Input a numeric value")
-        if clm < 0:
+        if self.clm < 0:
             raise ValueError("CLM cannot be negative")
+    
+    @staticmethod
+    def parameter_validation(name, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"{name} must be numeric")
         
-        self.polarity = polarity
-        self.v_threshold = v_threshold
-        self.k = k
-        self.clm = clm
+        if not math.isfinite(value):
+            raise ValueError(f"{name} must be finite")
+        
+        return value
         
     def calculate_overdrive_voltage(self, v_g, v_s):
         v_gs = v_g - v_s
