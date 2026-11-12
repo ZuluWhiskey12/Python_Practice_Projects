@@ -12,9 +12,9 @@ circuit = {
 gate_voltages = [0.5, 1.5, 3.0]
 
 for v_g in gate_voltages:
-    results =  solve_common_source(v_g, circuit, mosfet)
+    results = solve_common_source(v_g, circuit, mosfet)
     
-    g_m = mosfet.calculate_transconductance(v_g, results["v_s"])
+    g_m = mosfet.calculate_transconductance(v_g, results["v_d"], results["v_s"])
     a_v = calculate_common_source_gain(g_m, circuit)
     
     print(f"\na = {results['a']:.8f}")
