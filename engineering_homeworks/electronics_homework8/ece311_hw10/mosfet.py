@@ -68,7 +68,7 @@ class MOSFET:
             return self.k * (2 * v_ov * v_ds - v_ds ** 2)
         
         if region == "Saturation": 
-            return self.k * v_ov ** 2
+            return self.k * v_ov ** 2 * (1 + self.clm * v_ds)
         
         raise ValueError("Unsupported operating region")
     
