@@ -1,5 +1,5 @@
-from mosfet import MOSFET
-from circuit_solver import solve_common_source, calculate_common_source_gain
+from devices.mosfet import MOSFET
+from solvers.circuit_solver import solve_common_source, calculate_common_source_gain
 
 mosfet = MOSFET("NMOS", 0.4, 0.05)
 

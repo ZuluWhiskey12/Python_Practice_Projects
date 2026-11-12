@@ -65,13 +65,43 @@ class MOSFET:
         v_ds = self.calculate_effective_vds(v_d, v_s)
         
         if region == "Triode":
-            return self.k * (2 * v_ov * v_ds - v_ds ** 2)
+            return self.k * (2 * v_ov * v_ds - v_ds ** 2) * (1 + self.clm * v_ds)
         
         if region == "Saturation": 
             return self.k * v_ov ** 2 * (1 + self.clm * v_ds)
         
-        raise ValueError("Unsupported operating region")
+        raise ValueError("Unsupported operating region")   
     
-    def calculate_transconductance(self, v_g, v_s):
+    def calculate_transconductance(self, v_g, v_d, v_s):
+        region = self.check_region(v_g, v_d, v_s)
+        
+        if region == "Cutoff":
+            return 0.0
+        
         v_ov = self.calculate_overdrive_voltage(v_g, v_s)
-        return 2 * self.k * v_ov
+        v_ds = self.calculate_effective_vds(v_d, v_s)
+        
+        if region == "Triode":
+            return 2 * self.k * v_ds * (1 + self.clm * v_ds)
+        
+        if region == "Saturation":
+            return 2 * self.k * v_ov * (1 + self.clm * v_ds)
+        
+        raise ValueError("Unsupported operating region")   
+        
+    def calculate_output_resistance(self, v_g, v_d, v_s):
+        region = self.check_region(v_g, v_d, v_s)
+        
+        if region == "Cutoff":
+            return float('inf')
+        
+        if region == "Triode":
+            raise ValueError("Output resistance calculation only supported in saturation")
+        
+        if self.clm == 0:
+            return float('inf')
+        
+        v_ov = self.calculate_overdrive_voltage(v_g, v_s)
+        
+        return 1 / (self.clm * self.k * v_ov ** 2)
+        

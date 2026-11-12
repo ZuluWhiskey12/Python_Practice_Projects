@@ -1,4 +1,4 @@
-from mosfet import MOSFET
+from devices.mosfet import MOSFET
 import numpy as np
 
 def solve_common_source(v_g, circuit, mosfet):
