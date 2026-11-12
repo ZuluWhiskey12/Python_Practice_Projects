@@ -24,6 +24,9 @@ def solve_common_source(v_g, circuit, mosfet):
         if region == "Saturation":
             v_ds = v_d - v_s
             return {
+                "a": a,
+                "b": b,
+                "c": c,
                 "v_s": v_s,
                 "v_d": v_d,
                 "v_ds": v_ds,
