@@ -3,8 +3,10 @@ class MOSFET:
     def __init__(self, device_type, v_threshold, k, clm = 0.0):
         if not isinstance(device_type, str):
             raise TypeError("Input NMOS or PMOS")
+        
         if device_type.upper().strip() not in ("NMOS", "PMOS"):
             raise ValueError("Input NMOS or PMOS")
+        
         self.device_type = device_type.strip().upper()
         
         if self.device_type == "NMOS":
